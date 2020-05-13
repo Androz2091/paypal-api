@@ -1,0 +1,24 @@
+{
+  "name": "paypal-api",
+  "version": "0.0.1",
+  "description": "Node.js package to interact with PayPal REST API",
+  "main": "lib/index.js",
+  "author": "Androz2091 <androz2091@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Androz2091/paypal-api.git"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.7",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}

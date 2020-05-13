@@ -1,0 +1,5 @@
+# Compiled files
+lib/
+
+# Node
+node_modules/
