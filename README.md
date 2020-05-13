@@ -19,5 +19,5 @@ const paypal = new PayPal({
 // Start fetching token (it automatically fetches the token again when it expires)
 paypal.fetchToken();
 
-paypal.listProduct().then(console.log);
+paypal.listProducts().then(console.log);
 ```
