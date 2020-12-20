@@ -2,9 +2,9 @@
 
 💰Easy to use framework to communicate with the PayPal API.
 
-## Not finished
+## Only basic endpoints are supported
 
-Actually, the package doesn't support all the endpoints of the PayPal API. Please open an issue if there are endpoints you want to see in.
+At this time, the package doesn't support all the endpoints of the PayPal API, as it is made for one of my projects I only built the endpoints I needed. Please open an issue if there are endpoints you want to see in.
 
 ## Example
 
@@ -16,8 +16,96 @@ const paypal = new PayPal({
     clientSecret: 'paypal client secret'
 });
 
-// Start fetching token (it automatically fetches the token again when it expires)
-paypal.fetchToken();
+paypal.listProducts().then(console.log); // you now have access to all the methods!
+```
 
+## Products
+
+### List products
+```js
 paypal.listProducts().then(console.log);
 ```
+
+### Create products
+
+```js
+paypal.createProduct({
+    name: "Video Streaming Service",
+    description: "Video streaming service",
+    type: "SERVICE",
+    category: "SOFTWARE",
+    image_url: "https://example.com/streaming.jpg",
+    home_url: "https://example.com/home"
+})
+```
+
+### TODO
+
+* Product details: https://developer.paypal.com/docs/api/catalog-products/v1/#products_get
+* Update product: https://developer.paypal.com/docs/api/catalog-products/v1/#products_patch
+
+## Plans
+
+### List plans
+```js
+paypal.listPlans().then(console.log);
+```
+
+### Create plans
+```js
+paypal.createPlan({
+    product_id: 'PROD-XXCD1234QWER65782',
+    name: 'Basic Plan',
+    description: 'Basic plan',
+    billing_cycles: [
+        {
+            frequency: {
+                interval_unit: 'MONTH',
+                interval_count: 1
+            },
+            tenure_type: 'TRIAL',
+            sequence: 1,
+            total_cycles: 1
+        },
+        {
+            frequency: {
+                interval_unit: 'MONTH',
+                interval_count: 1
+            },
+            tenure_type: 'REGULAR',
+            sequence: 2,
+            total_cycles: 12,
+            pricing_scheme: {
+                fixed_price: {
+                    value: '10',
+                    currency_code: 'USD'
+                }
+            }
+        }
+    ],
+    payment_preferences: {
+        service_type: 'PREPAID',
+        auto_bill_outstanding: true,
+        setup_fee: {
+            value: '10',
+            currency_code: 'USD'
+        },
+        setup_fee_failure_action: 'CONTINUE',
+        payment_failure_threshold: 3
+    },
+    quantity_supported: true,
+    taxes: {
+        percentage: '10',
+        inclusive: false
+    }
+})
+```
+
+### TODO
+
+* Plan details: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_get
+* Update plan: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_patch
+    - update plan pricing: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_update-pricing-schemes
+* Activate plan: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_activate
+* Deactivate plan: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_deactivate
+

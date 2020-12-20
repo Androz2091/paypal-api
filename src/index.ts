@@ -6,7 +6,11 @@ import {
     Plan,
 
     // PAYPAL-API LIB TYPES (used for POST requests)
-    ProductCreateOptions
+    ProductCreateOptions,
+    PlanCreateOptions,
+    PlanCreateSuccess,
+    SubscriptionCreateOptions,
+    SubscriptionCreateSuccess
 } from './types'
 
 interface PayPalOptions {
@@ -82,7 +86,7 @@ export = class PayPal {
         return res.data.products
     }
 
-    async createProduct (data: ProductCreateOptions) {
+    async createProduct (data: ProductCreateOptions): Promise<Product> {
         const res = await this.request(`${this.baseURL}/catalogs/products`, 'POST', {
             data
         })
@@ -92,5 +96,19 @@ export = class PayPal {
     async listPlans (productID: string): Promise<Plan[]> {
         const res = await this.request(`${this.baseURL}/billing/plans?product_id=${productID}&page_size=2&page=1&total_required=true`, 'GET')
         return res.data.plans
+    }
+
+    async createPlan (data: PlanCreateOptions): Promise<PlanCreateSuccess> {
+        const res = await this.request(`${this.baseURL}/billing/plans`, 'POST', {
+            data
+        })
+        return res.data
+    }
+
+    async createSubscription (data: SubscriptionCreateOptions): Promise<SubscriptionCreateSuccess> {
+        const res = await this.request(`${this.baseURL}/billing/plans`, 'POST', {
+            data
+        })
+        return res.data
     }
 };

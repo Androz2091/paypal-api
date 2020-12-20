@@ -16,6 +16,7 @@ module.exports = {
     ],
     rules: {
         indent: ['error', 4],
+        'quote-props': ['error', 'as-needed'],
         camelcase: 0
     }
 }
