@@ -88,7 +88,7 @@ export = class PayPal {
         return res.data.products
     }
 
-    async createProduct (data: ProductCreateOptions): Promise<Product> {
+    async createProduct (data: Partial<ProductCreateOptions>): Promise<Product> {
         const res = await this.request(`${this.baseURL}/catalogs/products`, 'POST', {
             data
         })
@@ -100,14 +100,14 @@ export = class PayPal {
         return res.data.plans
     }
 
-    async createPlan (data: PlanCreateOptions): Promise<PlanCreateSuccess> {
+    async createPlan (data: Partial<PlanCreateOptions>): Promise<PlanCreateSuccess> {
         const res = await this.request(`${this.baseURL}/billing/plans`, 'POST', {
             data
         })
         return res.data
     }
 
-    async createSubscription (data: SubscriptionCreateOptions): Promise<SubscriptionCreateSuccess> {
+    async createSubscription (data: Partial<SubscriptionCreateOptions>): Promise<SubscriptionCreateSuccess> {
         const res = await this.request(`${this.baseURL}/billing/subscriptions`, 'POST', {
             data
         })
@@ -124,7 +124,7 @@ export = class PayPal {
         return res.data
     }
 
-    async createWebhook (data: WebhookCreateOptions): Promise<Webhook> {
+    async createWebhook (data: Partial<WebhookCreateOptions>): Promise<Webhook> {
         const res = await this.request(`${this.baseURL}/notifications/webhooks`, 'POST', {
             data
         })
