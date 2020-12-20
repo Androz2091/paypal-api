@@ -91,5 +91,5 @@ export interface PlanCreateSuccess {
 }
 
 export interface Plan {
-
+    id: string;
 };
