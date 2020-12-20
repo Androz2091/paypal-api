@@ -48,7 +48,7 @@ paypal.createProduct({
 
 ### List plans
 ```js
-paypal.listPlans().then(console.log);
+paypal.listPlans(productID).then(console.log);
 ```
 
 ### Create plans
