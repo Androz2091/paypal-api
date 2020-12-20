@@ -8,7 +8,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc",
-        "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\""
+        "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+        "prepublish": "npm run build"
     },
     "repository": {
         "type": "git",
