@@ -27,7 +27,6 @@
         "typescript": "^3.9.2"
     },
     "dependencies": {
-        "axios": "^0.21.0",
-        "node-fetch": "^2.6.0"
+        "axios": "^0.21.0"
     }
 }
