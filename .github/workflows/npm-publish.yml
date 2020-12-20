@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-          scope: '@Androz2091'
+          scope: '@androz2091'
       - run: npm install
       - run: npm publish
         env:
