@@ -5,6 +5,9 @@
     "main": "lib/index.js",
     "author": "Androz2091 <androz2091@gmail.com>",
     "license": "MIT",
+    "files": [
+        "lib/**/*"
+    ],
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc",
