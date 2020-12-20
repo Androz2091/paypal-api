@@ -106,7 +106,7 @@ export = class PayPal {
     }
 
     async createSubscription (data: SubscriptionCreateOptions): Promise<SubscriptionCreateSuccess> {
-        const res = await this.request(`${this.baseURL}/billing/plans`, 'POST', {
+        const res = await this.request(`${this.baseURL}/billing/subscriptions`, 'POST', {
             data
         })
         return res.data
