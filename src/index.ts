@@ -13,6 +13,7 @@ import {
     SubscriptionCreateOptions,
     SubscriptionCreateSuccess
 } from './types'
+import { Webhook, WebhookCreateOptions } from './types/Webhook';
 
 interface PayPalOptions {
     sandboxMode: boolean;
@@ -117,4 +118,17 @@ export = class PayPal {
         const res = await this.request(`${this.baseURL}/billing/subscriptions/${subscriptionID}`, 'GET')
         return res.data
     }
+
+    async listWebhooks (): Promise<Webhook[]> {
+        const res = await this.request(`${this.baseURL}/notifications/webhooks`, 'GET')
+        return res.data
+    }
+
+    async createWebhook (data: WebhookCreateOptions): Promise<Webhook> {
+        const res = await this.request(`${this.baseURL}/notifications/webhooks`, 'POST', {
+            data
+        })
+        return res.data
+    }
+    
 };
