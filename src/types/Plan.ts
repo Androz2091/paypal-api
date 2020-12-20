@@ -1,3 +1,4 @@
+import { Link } from './Link'
 import { ShippingAmount } from './Shipping'
 
 export interface PlanCreateOptions {
@@ -13,21 +14,15 @@ export interface PlanCreateOptions {
         sequence: number,
         total_cycles: number,
         pricing_scheme: {
-            fixed_price: {
-                value: string,
-                currency_code: string
-            }
+            fixed_price: ShippingAmount
         }
-    }[],
+    }[]
     payment_preferences: {
         service_type: string,
-        auto_bill_outstanding: number,
-        setup_fee: {
-            value: string,
-            currency_code: string
-      },
-      setup_fee_failure_action: string,
-      payment_failure_threshold: number
+        auto_bill_outstanding: boolean,
+        setup_fee: ShippingAmount,
+        setup_fee_failure_action: string,
+        payment_failure_threshold: number
     },
     quantity_supported: boolean,
     taxes: {
@@ -36,56 +31,13 @@ export interface PlanCreateOptions {
     }
 }
 
-export interface PlanCreateSuccess {
+export interface PlanCreateSuccess extends PlanCreateOptions {
     id: string,
-    product_id: string,
-    name: string,
     status: string,
-    description: string,
-    billing_cycles: {
-            pricing_scheme: {
-                fixed_price: ShippingAmount
-            },
-            frequency: {
-                interval_unit: string,
-                interval_count: 1
-            },
-            tenure_type: string,
-            sequence: number,
-            total_cycles: number
-    }[],
-    payment_preferences: {
-        auto_bill_outstanding: boolean,
-        setup_fee: ShippingAmount,
-        setup_fee_failure_action: string,
-        payment_failure_threshold: number
-    },
-    taxes: {
-        percentage: string,
-        inclusive: boolean
-    },
-    quantity_supported: boolean,
     create_time: string,
     update_time: string,
-    links: [
-        {
-            href: string,
-            rel: string,
-            method: string
-        },
-        {
-            href: string,
-            rel: string,
-            method: string
-        },
-        {
-            href: string,
-            rel: string,
-            method: string
-        }
-    ]
+    links: Link[]
 }
 
-export interface Plan {
-    id: string;
+export interface Plan extends PlanCreateSuccess {
 };
