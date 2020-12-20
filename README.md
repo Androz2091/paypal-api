@@ -144,3 +144,42 @@ paypal.createSubscription({
 ```js
 paypal.getSubscription('I-Y3FEL44WUVPU').then(console.log);
 ```
+
+### TODO
+
+* Activate subscription: https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_activate
+* Cancel subscription: https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_cancel
+* Subscription capture: https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_capture
+* Subscription revisions: https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_revise
+* Suspend subscription: https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_suspend
+* List transactions: https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_transactions
+
+## Webhooks
+
+### List webhooks
+
+```js
+paypal.listWebhooks().then(console.log);
+```
+
+### Create webhook
+
+```js
+paypal.createWebhook({
+    url: "https://example.com/example_webhook",
+    event_types: [
+        {
+            name: "PAYMENT.AUTHORIZATION.CREATED"
+        },
+        {
+            name: "PAYMENT.AUTHORIZATION.VOIDED"
+        }
+    ]
+})
+```
+
+### TODO
+
+* Update webhook: https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_update
+* Webhook details: https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_get
+* Webhook event types: https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_list

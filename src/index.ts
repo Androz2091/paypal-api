@@ -130,5 +130,9 @@ export = class PayPal {
         })
         return res.data
     }
+
+    async deleteWebhook (webhookID: string): Promise<void> {
+        await this.request(`${this.baseURL}/notifications/webhooks/${webhookID}`, 'DELETE')
+    }
     
 };
