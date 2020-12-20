@@ -4,6 +4,7 @@ import {
     // PAYPAL TYPES (obtained from GET requests)
     Product,
     Plan,
+    Subscription,
 
     // PAYPAL-API LIB TYPES (used for POST requests)
     ProductCreateOptions,
@@ -109,6 +110,11 @@ export = class PayPal {
         const res = await this.request(`${this.baseURL}/billing/subscriptions`, 'POST', {
             data
         })
+        return res.data
+    }
+
+    async getSubscription (subscriptionID: string): Promise<Subscription> {
+        const res = await this.request(`${this.baseURL}/billing/subscriptions/${subscriptionID}`, 'GET')
         return res.data
     }
 };

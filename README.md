@@ -109,3 +109,38 @@ paypal.createPlan({
 * Activate plan: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_activate
 * Deactivate plan: https://developer.paypal.com/docs/api/subscriptions/v1/#plans_deactivate
 
+## Subscriptions
+
+### Create subscription
+
+```js
+paypal.createSubscription({
+    plan_id: 'P-2UF78835G6983425GLSM44MA',
+    start_time: new Date((Date.now() + 8000)).toISOString(),
+    subscriber: {
+        name: {
+            given_name: 'John',
+            surname: 'Doe'
+        },
+        email_address: 'customer@example.com'
+    },
+    application_context: {
+        brand_name: 'example',
+        locale: 'en-US',
+        shipping_preference: 'SET_PROVIDED_ADDRESS',
+        user_action: 'SUBSCRIBE_NOW',
+        payment_method: {
+            payer_selected: 'PAYPAL',
+            payee_preferred: 'IMMEDIATE_PAYMENT_REQUIRED'
+        },
+        return_url: 'https://example.com/returnUrl',
+        cancel_url: 'https://example.com/cancelUrl'
+    }
+}
+```
+
+### Subscription details
+
+```js
+paypal.getSubscription('I-Y3FEL44WUVPU').then(console.log);
+```
