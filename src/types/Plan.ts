@@ -1,3 +1,5 @@
+import { ShippingAmount } from './Shipping'
+
 export interface PlanCreateOptions {
     product_id: string,
     name: string,
@@ -42,10 +44,7 @@ export interface PlanCreateSuccess {
     description: string,
     billing_cycles: {
             pricing_scheme: {
-                fixed_price: {
-                    currency_code: string,
-                    value: string
-                }
+                fixed_price: ShippingAmount
             },
             frequency: {
                 interval_unit: string,
@@ -57,10 +56,7 @@ export interface PlanCreateSuccess {
     }[],
     payment_preferences: {
         auto_bill_outstanding: boolean,
-        setup_fee: {
-            currency_code: string,
-            value: string
-        },
+        setup_fee: ShippingAmount,
         setup_fee_failure_action: string,
         payment_failure_threshold: number
     },

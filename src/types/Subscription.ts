@@ -1,31 +1,27 @@
+import { Link } from './Link'
+import { ShippingAddress, ShippingAmount } from './Shipping'
+
+interface Subscriber {
+    name: {
+        given_name: string,
+        surname: string
+    },
+    email_address: string,
+    payer_id: string;
+    shipping_address: {
+        name: {
+            full_name: string
+        },
+        address: ShippingAddress
+    }
+}
+
 export interface SubscriptionCreateOptions {
     plan_id: string,
     start_time: string,
     quantity: string,
-    shipping_amount: {
-        currency_code: string,
-        value: string
-    },
-    subscriber: {
-        name: {
-            given_name: string,
-            surname: string
-        },
-        email_address: string,
-        shipping_address: {
-            name: {
-                full_name: string
-            },
-            address: {
-                address_line_1: string
-                address_line_2: string,
-                admin_area_2: string,
-                admin_area_1: string,
-                postal_code: string,
-                country_code: string
-            }
-        }
-    },
+    shipping_amount: ShippingAmount;
+    subscriber: Subscriber,
     application_context: {
         brand_name: string,
         locale: string,
@@ -47,97 +43,34 @@ export interface SubscriptionCreateSuccess {
     plan_id: string,
     start_time: string,
     quantity: string,
-    shipping_amount: {
-        currency_code: string,
-        value: string
-    },
-    subscriber: {
-        name: {
-            given_name: string,
-            surname: string
-        },
-        email_address: string,
-        shipping_address: {
-            name: {
-                full_name: string
-            },
-            address: {
-                address_line_1: string,
-                address_line_2: string,
-                admin_area_2: string,
-                admin_area_1: string,
-                postal_code: string,
-                country_code: string
-            }
-        }
-    },
+    shipping_amount: ShippingAmount
+    subscriber: Subscriber,
     create_time: string,
-    links: [
-        {
-            href: string,
-            rel: string,
-            method: string
-        },
-        {
-            href: string,
-            rel: string,
-            method: string
-        },
-        {
-            href: string,
-            rel: string,
-            method: string
-        }
-    ]
+    links: Link[]
 }
 
 export interface Subscription {
-    id: string,
     status: string,
     status_update_time: string,
+    id: string,
     plan_id: string,
     start_time: string,
     quantity: string,
-    shipping_amount: {
-        currency_code: string,
-        value: string
-    },
-    subscriber: {
-        name: {
-            given_name: string,
-            surname: string
+    shipping_amount: ShippingAmount
+    subscriber: Subscriber,
+    billing_info: {
+        outstanding_balance: ShippingAmount,
+        cycle_executions: any[],
+        last_payment: {
+            amount: any,
+            time: string
         },
-        email_address: string,
-        shipping_address: {
-            name: {
-                full_name: string
-            },
-            address: {
-                address_line_1: string,
-                address_line_2: string,
-                admin_area_2: string,
-                admin_area_1: string,
-                postal_code: string,
-                country_code: string
-            }
-        }
+        next_billing_time: string,
+        final_payment_time: string,
+        failed_payments_count: number
     },
     create_time: string,
-    links: [
-        {
-            href: string,
-            rel: string,
-            method: string
-        },
-        {
-            href: string,
-            rel: string,
-            method: string
-        },
-        {
-            href: string,
-            rel: string,
-            method: string
-        }
-    ]
+    update_time: string,
+    plan_overridden: number,
+    links: Link[]
 }
