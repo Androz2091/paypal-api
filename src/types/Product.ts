@@ -1,4 +1,13 @@
-import { Link } from "./"
+import { Link } from './'
+
+export interface ProductCreateOptions {
+    name: string,
+    description: string,
+    type: string,
+    category: string,
+    image_url: string,
+    home_url: string,
+}
 
 export interface Product {
     id: string;
