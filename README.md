@@ -116,7 +116,7 @@ paypal.createPlan({
 ```js
 paypal.createSubscription({
     plan_id: 'P-2UF78835G6983425GLSM44MA',
-    start_time: new Date((Date.now() + 8000)).toISOString(),
+    start_time: '2020-12-20T16:17:13Z',
     subscriber: {
         name: {
             given_name: 'John',
