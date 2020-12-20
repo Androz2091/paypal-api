@@ -10,8 +10,8 @@ export interface WebhookCreateOptions {
 };
 
 export interface Webhook {
-    id: string,
-    url: string,
-    event_types: EventType[];
+    id: string
+    url: string
+    event_types: EventType[]
     links: Link[]
 }
