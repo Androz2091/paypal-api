@@ -121,7 +121,7 @@ export = class PayPal {
 
     async listWebhooks (): Promise<Webhook[]> {
         const res = await this.request(`${this.baseURL}/notifications/webhooks`, 'GET')
-        return res.data
+        return res.data.webhooks
     }
 
     async createWebhook (data: Partial<WebhookCreateOptions>): Promise<Webhook> {
