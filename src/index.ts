@@ -11,7 +11,8 @@ import {
     PlanCreateOptions,
     PlanCreateSuccess,
     SubscriptionCreateOptions,
-    SubscriptionCreateSuccess
+    SubscriptionCreateSuccess,
+    CapturePaymentOptions
 } from './types'
 import { Webhook, WebhookCreateOptions } from './types/Webhook';
 
@@ -116,6 +117,13 @@ export = class PayPal {
 
     async getSubscription (subscriptionID: string): Promise<Subscription> {
         const res = await this.request(`${this.baseURL}/billing/subscriptions/${subscriptionID}`, 'GET')
+        return res.data
+    }
+
+    async capturePayment (subscriptionID: string, data: CapturePaymentOptions): Promise<string> {
+        const res = await this.request(`${this.baseURL}/billing/subscriptions/${subscriptionID}/capture`, 'POST', {
+            data
+        })
         return res.data
     }
 

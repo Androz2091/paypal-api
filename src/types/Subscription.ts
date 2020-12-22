@@ -74,3 +74,9 @@ export interface Subscription {
     plan_overridden: number
     links: Link[]
 }
+
+export interface CapturePaymentOptions {
+    note: string;
+    amount: ShippingAmount;
+    capture_type: string;
+}
