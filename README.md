@@ -136,7 +136,7 @@ paypal.createSubscription({
         return_url: 'https://example.com/returnUrl',
         cancel_url: 'https://example.com/cancelUrl'
     }
-}
+})
 ```
 
 ### Subscription details
