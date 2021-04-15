@@ -67,7 +67,7 @@ export = class PayPal {
         this.accessTokenPromise = new Promise((resolve) => {
             const params = new URLSearchParams()
             params.set('grant_type', 'client_credentials')
-            axios(`${this.baseURL}/oauth2/token`, {
+            axios(`${this.baseURL}/v1/oauth2/token`, {
                 method: 'POST',
                 headers: {
                     'Accept-Language': 'en_US',
@@ -86,62 +86,62 @@ export = class PayPal {
     }
 
     async listProducts (): Promise<Product[]> {
-        const res = await this.request(`${this.baseURL}/catalogs/products?page_size=2&page=1&total_required=true`, 'GET')
+        const res = await this.request(`${this.baseURL}/v1/catalogs/products?page_size=2&page=1&total_required=true`, 'GET')
         return res.data.products
     }
 
     async createProduct (data: Partial<ProductCreateOptions>): Promise<Product> {
-        const res = await this.request(`${this.baseURL}/catalogs/products`, 'POST', {
+        const res = await this.request(`${this.baseURL}/v1/catalogs/products`, 'POST', {
             data
         })
         return res.data
     }
 
     async listPlans (productID: string): Promise<Plan[]> {
-        const res = await this.request(`${this.baseURL}/billing/plans?product_id=${productID}&page_size=2&page=1&total_required=true`, 'GET')
+        const res = await this.request(`${this.baseURL}/v1/billing/plans?product_id=${productID}&page_size=2&page=1&total_required=true`, 'GET')
         return res.data.plans
     }
 
     async createPlan (data: Partial<PlanCreateOptions>): Promise<PlanCreateSuccess> {
-        const res = await this.request(`${this.baseURL}/billing/plans`, 'POST', {
+        const res = await this.request(`${this.baseURL}/v1/billing/plans`, 'POST', {
             data
         })
         return res.data
     }
 
     async createSubscription (data: Partial<SubscriptionCreateOptions>): Promise<SubscriptionCreateSuccess> {
-        const res = await this.request(`${this.baseURL}/billing/subscriptions`, 'POST', {
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions`, 'POST', {
             data
         })
         return res.data
     }
 
     async getSubscription (subscriptionID: string): Promise<Subscription> {
-        const res = await this.request(`${this.baseURL}/billing/subscriptions/${subscriptionID}`, 'GET')
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}`, 'GET')
         return res.data
     }
 
     async capturePayment (subscriptionID: string, data: CapturePaymentOptions): Promise<string> {
-        const res = await this.request(`${this.baseURL}/billing/subscriptions/${subscriptionID}/capture`, 'POST', {
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}/capture`, 'POST', {
             data
         })
         return res.data
     }
 
     async listWebhooks (): Promise<Webhook[]> {
-        const res = await this.request(`${this.baseURL}/notifications/webhooks`, 'GET')
+        const res = await this.request(`${this.baseURL}/v1/notifications/webhooks`, 'GET')
         return res.data.webhooks
     }
 
     async createWebhook (data: Partial<WebhookCreateOptions>): Promise<Webhook> {
-        const res = await this.request(`${this.baseURL}/notifications/webhooks`, 'POST', {
+        const res = await this.request(`${this.baseURL}/v1/notifications/webhooks`, 'POST', {
             data
         })
         return res.data
     }
 
     async deleteWebhook (webhookID: string): Promise<void> {
-        await this.request(`${this.baseURL}/notifications/webhooks/${webhookID}`, 'DELETE')
+        await this.request(`${this.baseURL}/v1/notifications/webhooks/${webhookID}`, 'DELETE')
     }
 
     async createPayout (data: Partial<PayoutCreateOptions>): Promise<Partial<PayoutCreateOptions>> {
