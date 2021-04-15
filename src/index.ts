@@ -38,7 +38,7 @@ export = class PayPal {
 
     constructor (options: PayPalOptions) {
         this.sandboxMode = options.sandboxMode
-        this.baseURL = this.sandboxMode ? 'https://api.sandbox.paypal.com' : 'https://api.paypal.com'
+        this.baseURL = this.sandboxMode ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com'
         this.clientID = options.clientID
         this.clientSecret = options.clientSecret
 
