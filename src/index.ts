@@ -12,7 +12,8 @@ import {
     PlanCreateSuccess,
     SubscriptionCreateOptions,
     SubscriptionCreateSuccess,
-    CapturePaymentOptions
+    CapturePaymentOptions,
+    PayoutCreateOptions
 } from './types'
 import { Webhook, WebhookCreateOptions } from './types/Webhook';
 
@@ -141,6 +142,13 @@ export = class PayPal {
 
     async deleteWebhook (webhookID: string): Promise<void> {
         await this.request(`${this.baseURL}/notifications/webhooks/${webhookID}`, 'DELETE')
+    }
+
+    async createPayout (data: Partial<PayoutCreateOptions>): Promise<Payout> {
+        const res = await this.request(`${this.baseURL}/v1/payments/payouts`, 'POST', {
+            data
+        })
+        return res.data
     }
     
 };
