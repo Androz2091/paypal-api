@@ -144,7 +144,7 @@ export = class PayPal {
         await this.request(`${this.baseURL}/notifications/webhooks/${webhookID}`, 'DELETE')
     }
 
-    async createPayout (data: Partial<PayoutCreateOptions>): Promise<Payout> {
+    async createPayout (data: Partial<PayoutCreateOptions>): Promise<Partial<PayoutCreateOptions>> {
         const res = await this.request(`${this.baseURL}/v1/payments/payouts`, 'POST', {
             data
         })
