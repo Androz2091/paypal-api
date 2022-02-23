@@ -13,7 +13,8 @@ import {
     SubscriptionCreateOptions,
     SubscriptionCreateSuccess,
     CapturePaymentOptions,
-    PayoutCreateOptions
+    PayoutCreateOptions,
+    SubscriptionTransaction
 } from './types'
 import { Webhook, WebhookCreateOptions } from './types/Webhook';
 
@@ -118,6 +119,21 @@ export = class PayPal {
 
     async getSubscription (subscriptionID: string): Promise<Subscription> {
         const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}`, 'GET')
+        return res.data
+    }
+
+    async cancelSubscription(subscriptionID: string): Promise<void> {
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}/cancel`, 'POST')
+        return res.data
+    }
+
+    async activateSubscription(subscriptionID: string): Promise<void> {
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}/activate`, 'POST')
+        return res.data
+    }
+
+    async listSubscriptionTransactions(subscriptionID: string, startTime: string, endTime: string): Promise<SubscriptionTransaction[]> {
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}/transactions?start_time=${startTime}&end_time=${endTime}`, 'GET')
         return res.data
     }
 
