@@ -1,5 +1,6 @@
-import { Link } from './Link'
+import { Link, LinkDescription } from './Link'
 import { ShippingAddress, ShippingAmount } from './Shipping'
+import { Transaction } from "./Transaction"
 
 interface Subscriber {
     name: {
@@ -73,6 +74,13 @@ export interface Subscription {
     update_time: string
     plan_overridden: number
     links: Link[]
+}
+
+export interface SubscriptionTransaction {
+    transactions: Transaction[],
+    total_items: number,
+    total_pages: number,
+    links: LinkDescription[]
 }
 
 export interface CapturePaymentOptions {

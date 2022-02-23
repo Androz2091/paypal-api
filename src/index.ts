@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, Method } from 'axios'
+import axios, { AxiosRequestConfig, Method, AxiosResponse } from 'axios';
 import {
 
     // PAYPAL TYPES (obtained from GET requests)
@@ -13,7 +13,8 @@ import {
     SubscriptionCreateOptions,
     SubscriptionCreateSuccess,
     CapturePaymentOptions,
-    PayoutCreateOptions
+    PayoutCreateOptions,
+    SubscriptionTransaction
 } from './types'
 import { Webhook, WebhookCreateOptions } from './types/Webhook';
 
@@ -33,8 +34,8 @@ export = class PayPal {
     public clientID: string;
     public clientSecret: string;
     public baseURL: string;
-    private accessToken?: AccessTokenData;
-    private accessTokenPromise: Promise<void>;
+    public accessToken?: AccessTokenData;
+    public accessTokenPromise: Promise<void>;
 
     constructor (options: PayPalOptions) {
         this.sandboxMode = options.sandboxMode
@@ -45,7 +46,7 @@ export = class PayPal {
         this.accessTokenPromise = null
     }
 
-    private async request (url: string, method: Method, options?: AxiosRequestConfig) {
+    public async request (url: string, method: Method, options?: AxiosRequestConfig) {
         if (this.accessTokenPromise) await this.accessTokenPromise
         if (!this.accessToken || this.accessToken?.expiresAt <= Date.now()) await this.fetchToken()
         const defaultOptions = {
@@ -63,8 +64,8 @@ export = class PayPal {
         return value
     }
 
-    private fetchToken () {
-        this.accessTokenPromise = new Promise((resolve) => {
+    public fetchToken () : Promise<void> {
+        this.accessTokenPromise = new Promise((resolve: Function) => {
             const params = new URLSearchParams()
             params.set('grant_type', 'client_credentials')
             axios(`${this.baseURL}/v1/oauth2/token`, {
@@ -74,7 +75,7 @@ export = class PayPal {
                     Authorization: 'Basic ' + Buffer.from(`${this.clientID}:${this.clientSecret}`).toString('base64')
                 },
                 data: params.toString()
-            }).then((res) => {
+            }).then((res: AxiosResponse) => {
                 this.accessToken = {
                     value: res.data.access_token,
                     expiresAt: Date.now() + (res.data.expires_in)
@@ -118,6 +119,21 @@ export = class PayPal {
 
     async getSubscription (subscriptionID: string): Promise<Subscription> {
         const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}`, 'GET')
+        return res.data
+    }
+
+    async cancelSubscription(subscriptionID: string): Promise<void> {
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}/cancel`, 'POST')
+        return res.data
+    }
+
+    async activateSubscription(subscriptionID: string): Promise<void> {
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}/activate`, 'POST')
+        return res.data
+    }
+
+    async listSubscriptionTransactions(subscriptionID: string, startTime: string, endTime: string): Promise<SubscriptionTransaction[]> {
+        const res = await this.request(`${this.baseURL}/v1/billing/subscriptions/${subscriptionID}/transactions?start_time=${startTime}&end_time=${endTime}`, 'GET')
         return res.data
     }
 
